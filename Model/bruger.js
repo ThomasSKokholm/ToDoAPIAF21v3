@@ -35,11 +35,11 @@ brugerSchema.methods.generateAuthToken = function() {
 const Bruger = mongoose.model('Bruger', brugerSchema);
 // Validering af bruger
 function validateBruger(bruger) {
-    const schema = {
+    const schema = Joi.object({
         navn: Joi.string().min(5).max(50).required(),
         email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(5).max(255).required()
-    };
+    });
 
     return schema.validate(bruger);
 }

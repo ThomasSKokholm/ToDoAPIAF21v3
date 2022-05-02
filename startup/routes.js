@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression');
 const bruger = require('../routes/bruger');
+const login = require('../routes/login');
 
 module.exports = function (app) {
 
@@ -20,5 +21,6 @@ module.exports = function (app) {
     });
 
     app.use('/api/bruger', bruger);
+    app.use('/api/login', login);
 
 };

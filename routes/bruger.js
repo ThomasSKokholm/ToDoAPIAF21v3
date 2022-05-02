@@ -21,9 +21,7 @@ route.post('/', async (req, res) => {
   if (bruger) return res.status(400).send('Bruger findes allerede');
 
   bruger = new Bruger({
-    navn: req.body.navn,
-    email: req.body.email,
-    password: req.body.password,
+      ...req.body,
   });
 
   try{
