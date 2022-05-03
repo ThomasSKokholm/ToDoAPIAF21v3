@@ -4,6 +4,8 @@ const cors = require('cors');
 const compression = require('compression');
 const bruger = require('../routes/bruger');
 const login = require('../routes/login');
+const todo = require('../routes/todo');
+const postit = require('../routes/postit');
 
 module.exports = function (app) {
 
@@ -12,7 +14,7 @@ module.exports = function (app) {
     };
 
     app.use(helmet());
-    app.use(cors());
+    app.use(cors(corsOptions));
     app.use(compression());
     app.use(express.json());
 
@@ -22,5 +24,7 @@ module.exports = function (app) {
 
     app.use('/api/bruger', bruger);
     app.use('/api/login', login);
+    app.use('/api/todo', todo);
+    app.use('/api/postit', postit);
 
 };

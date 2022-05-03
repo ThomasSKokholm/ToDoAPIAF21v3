@@ -17,10 +17,10 @@ const elementSchema = new mongoose.Schema({
 const Element = mongoose.model('Element', elementSchema);
 
 function validateElement(element) {
-    const schema = {
+    const schema = Joi.object({
         title: Joi.string().min(5).max(255).required(),
         udført: Joi.boolean().required()
-    };
+    });
 
     return schema.validate(element);
 }

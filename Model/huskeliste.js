@@ -20,12 +20,13 @@ const huskelisteSchema = new mongoose.Schema({
 const Huskeliste = mongoose.model('Huskeliste', huskelisteSchema);
 
 function validateHuskeliste(huskeliste) {
-    const schema = {
+    const schema = Joi.object({
         navn: Joi.string().min(2).max(100).required(),
         brugerid: Joi.string().required(),
-    };
+        elementer: Joi.allow(),
+    });
 
-    return schema.validate(huskeliste, schema);
+    return schema.validate(huskeliste);
 }
 
 module.exports.Huskeliste = Huskeliste;
