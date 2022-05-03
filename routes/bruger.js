@@ -13,7 +13,7 @@ route.get('/', async (req, res) => {
   res.send(bruger);
 });
 // Opret bruger
-route.post('/', async (req, res) => {
+route.post('/opret/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -43,5 +43,32 @@ route.post('/', async (req, res) => {
       debug(error.message);
   }
 });
+// Slet bruger
+route.delete('/slet/:id', async (req, res) => {
+  const bruger = await Bruger.findByIdAndRemove(req.params.id);
+
+  if (!bruger) return res.status(404).send('Bruger findes ikke');
+
+  res.send(bruger);
+});
+// Opdater bruger
+route.put('/opdater/:id', async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  
+  const bruger = await Bruger.findByIdAndUpdate(req.params.id, {
+      ...req.body,
+  }, { new: true });
+
+  if (!bruger) return res.status(404).send('Bruger findes ikke');
+  // opdater password salt
+  const salt = await bcrypt.genSalt(10);
+  bruger.password = await bcrypt.hash(bruger.password, salt);
+  // gem opdateret bruger
+  await bruger.save();
+
+  res.send({navn: bruger.navn, email: bruger.email});
+});
+
 
 module.exports = route;

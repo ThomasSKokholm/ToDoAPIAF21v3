@@ -2,7 +2,7 @@ const express = require('express');
 const route = express.Router();
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
-const { Bruger } = require('../model/bruger');
+const { Bruger } = require('../Model/bruger');
 
 route.post('/', async (req, res) => {
     const { error } = validate(req.body);

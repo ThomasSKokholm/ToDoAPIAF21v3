@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 
+// mongoose.Promise = global.Promise;
 // Schema for bruger
 const brugerSchema = new mongoose.Schema({
     navn: {
@@ -30,8 +31,15 @@ const brugerSchema = new mongoose.Schema({
 brugerSchema.methods.generateAuthToken = function() {
     const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
     return token;
-}
+};
 
+// let Bruger = null;
+// try{
+//     Bruger = mongoose.model('Bruger', brugerSchema);
+// } catch(error){
+//     console.log(error);
+//     Bruger = mongoose.model('Bruger');
+// }
 const Bruger = mongoose.model('Bruger', brugerSchema);
 // Validering af bruger
 function validateBruger(bruger) {
@@ -44,5 +52,6 @@ function validateBruger(bruger) {
     return schema.validate(bruger);
 }
 
+// module.exports = mongoose.models.Bruger || mongoose.model(Bruger, brugerSchema);
 module.exports.Bruger = Bruger;
 module.exports.validate = validateBruger;
